@@ -1,0 +1,20 @@
+{
+  "steps": {
+    "step_1": {
+      "name": "Start",
+      "actions": {
+        "SUCCESS": {
+          "next_key": "step_2"
+        }
+      }
+    },
+    "step_2": {
+      "name": "End",
+      "actions": {
+        "FAILURE": {
+          "next_key": "step_1"
+        }
+      }
+    }
+  }
+}
