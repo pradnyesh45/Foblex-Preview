@@ -1,7 +1,7 @@
 :host {
   display: block;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 h1 {
@@ -34,17 +34,27 @@ f-flow {
     .f-connection-path {
       stroke-width: 2;
       fill: none;
+
+      &[stroke="url(#connection_gradient"] {
+        stroke: currentColor !important;
+      }
     }
 
-    &.success-connection .f-connection-path {
-      stroke: #4caf50;
-      z-index: 1;
+    &.success-connection {
+      color: #4caf50;
+
+      .f-connection-path {
+        stroke: currentColor;
+      }
     }
 
-    &.failure-connection .f-connection-path {
-      stroke: #f44336;
-      stroke-width: 3;
-      z-index: 2;
+    &.failure-connection {
+      color: #f44336;
+
+      .f-connection-path {
+        stroke: currentColor;
+        stroke-width: 3;
+      }
     }
   }
 
@@ -66,25 +76,37 @@ f-flow {
       }
     }
   }
-}
-:host {
-  display: block;
-  width: 100%;
-  height: 100vh;
+
+  // Improved minimap styling
+  f-minimap {
+    background: rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+
+    .f-minimap-view {
+      background: rgba(0, 0, 0, 0.05) !important;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+
+    .f-minimap-node {
+      background: #2196f3 !important;
+      opacity: 0.7;
+      z-index: 2;
+    }
+  }
 }
 
 f-flow {
   width: 100%;
   height: calc(100% - 60px);
-  background: #fafafa;
+  background: #f5f5f5;
 }
 
 .f-node {
   min-width: 200px;
-  padding: 16px;
+  padding: 12px;
   background: white;
-  border: 2px solid #2196f3;
-  border-radius: 8px;
+  border: 1px solid #2196f3;
+  border-radius: 4px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

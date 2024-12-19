@@ -1,0 +1,314 @@
+{
+  "steps": {
+    "step_1": {
+      "name": "Welcome to Samriddh Kendra",
+      "actions": {
+        "FAILURE": {
+          "next_location": "STEP",
+          "next_key": "step_1",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        },
+        "SUCCESS": {
+          "next_location": "STEP",
+          "next_key": "step_2",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        }
+      },
+      "logic_variables": [],
+      "resources": [
+        {
+          "key": "custom-externalapi-login_screen_7hqswfy",
+          "is_error_if_source_error": true,
+          "verified_cond": null,
+          "visible_cond": null,
+          "skippable": false,
+          "is_auto_submit": false,
+          "is_re_submit": true,
+          "name": "",
+          "non_editable_fields": [],
+          "suggestions": {}
+        }
+      ],
+      "skippable": false,
+      "skip_to": null,
+      "loan_request": false,
+      "is_next_enabled": null
+    },
+    "step_2": {
+      "name": "Identity Verification",
+      "actions": {
+        "FAILURE": {
+          "next_location": "STEP",
+          "next_key": "step_2",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        },
+        "SUCCESS": {
+          "next_location": "STEP",
+          "next_key": "step_4",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        }
+      },
+      "logic_variables": [],
+      "resources": [
+        {
+          "key": "ocr-pan-bureau",
+          "is_error_if_source_error": true,
+          "verified_cond": {
+            "condition": "and",
+            "rules": [
+              {
+                "field": "primary/custom-externalapi-login_screen_7hqswfy/full_name",
+                "type": "str",
+                "operator": "fuzzy",
+                "constraint": "primary/ocr-pan-bureau/name",
+                "variables": [
+                  "primary/borrower/borrower_name",
+                  "primary/ocr-pan-bureau/name"
+                ],
+                "sub_type": null,
+                "error_out": true,
+                "error_msg": "Name on PAN does not match with applicant's name",
+                "done": null
+              }
+            ],
+            "error_out": false,
+            "error_msg": null
+          },
+          "visible_cond": null,
+          "skippable": false,
+          "is_auto_submit": false,
+          "is_re_submit": true,
+          "name": "",
+          "non_editable_fields": [],
+          "suggestions": {}
+        },
+        {
+          "key": "ocr-aadhaar-bureau",
+          "is_error_if_source_error": true,
+          "verified_cond": {
+            "condition": "and",
+            "rules": [
+              {
+                "field": "primary/custom-externalapi-login_screen_7hqswfy/full_name",
+                "type": "str",
+                "operator": "fuzzy",
+                "constraint": "primary/ocr-aadhaar-bureau/name",
+                "variables": [
+                  "primary/borrower/borrower_name",
+                  "primary/ocr-aadhaar-bureau/name"
+                ],
+                "sub_type": null,
+                "error_out": true,
+                "error_msg": "Name on Aadhaar card does not match with applicant's name",
+                "done": null
+              }
+            ],
+            "error_out": false,
+            "error_msg": null
+          },
+          "visible_cond": {
+            "condition": "and",
+            "rules": [
+              {
+                "field": "primary/ocr-pan-bureau/finstack_verified",
+                "type": "boolean",
+                "operator": "=",
+                "constraint": true,
+                "variables": ["primary/ocr-pan-bureau/finstack_verified"],
+                "sub_type": null,
+                "error_out": false,
+                "error_msg": null,
+                "done": null
+              }
+            ],
+            "error_out": false,
+            "error_msg": null
+          },
+          "skippable": false,
+          "is_auto_submit": false,
+          "is_re_submit": true,
+          "name": "",
+          "non_editable_fields": [],
+          "suggestions": {}
+        }
+      ],
+      "skippable": false,
+      "skip_to": null,
+      "loan_request": false,
+      "is_next_enabled": null
+    },
+    "step_4": {
+      "name": "Additional Details",
+      "actions": {
+        "FAILURE": {
+          "next_location": "STEP",
+          "next_key": "step_1",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        },
+        "SUCCESS": {
+          "next_location": "STEP",
+          "next_key": "step_5",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        }
+      },
+      "logic_variables": [],
+      "resources": [
+        {
+          "key": "custom-externalapi-store_details_14z6xto",
+          "is_error_if_source_error": true,
+          "verified_cond": null,
+          "visible_cond": null,
+          "skippable": false,
+          "is_auto_submit": false,
+          "is_re_submit": true,
+          "name": "Store Details",
+          "non_editable_fields": [],
+          "suggestions": {}
+        },
+        {
+          "key": "custom-externalapi-samriddh_sathi_details_926o94e",
+          "is_error_if_source_error": true,
+          "verified_cond": null,
+          "visible_cond": {
+            "condition": "and",
+            "rules": [
+              {
+                "field": "primary/custom-externalapi-store_details_14z6xto/finstack_verified",
+                "type": "boolean",
+                "operator": "=",
+                "constraint": true,
+                "variables": [
+                  "primary/custom-externalapi-store_details_14z6xto/finstack_verified"
+                ],
+                "sub_type": null,
+                "error_out": false,
+                "error_msg": null,
+                "done": null
+              }
+            ],
+            "error_out": false,
+            "error_msg": null
+          },
+          "skippable": false,
+          "is_auto_submit": false,
+          "is_re_submit": true,
+          "name": "Samriddh Sathi Details",
+          "non_editable_fields": [],
+          "suggestions": {}
+        }
+      ],
+      "skippable": false,
+      "skip_to": null,
+      "loan_request": false,
+      "is_next_enabled": null
+    },
+    "step_5": {
+      "name": "Bank Details",
+      "actions": {
+        "FAILURE": {
+          "next_location": "STEP",
+          "next_key": "step_5",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        },
+        "SUCCESS": {
+          "next_location": "STEP",
+          "next_key": "step_6",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        }
+      },
+      "logic_variables": [],
+      "resources": [
+        {
+          "key": "custom-externalapi-account_details_khmbzqj",
+          "is_error_if_source_error": true,
+          "verified_cond": null,
+          "visible_cond": null,
+          "skippable": false,
+          "is_auto_submit": false,
+          "is_re_submit": true,
+          "name": "Account Details",
+          "non_editable_fields": [],
+          "suggestions": {}
+        }
+      ],
+      "skippable": false,
+      "skip_to": null,
+      "loan_request": false,
+      "is_next_enabled": null
+    },
+    "step_6": {
+      "name": "Please transfer Rs 1179/- (incl of GST) at Samriddhkendra@sbi and upload details below ",
+      "actions": {
+        "FAILURE": {
+          "next_location": "STEP",
+          "next_key": "step_6",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        },
+        "SUCCESS": {
+          "next_location": "END",
+          "next_key": "ACCEPT",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        }
+      },
+      "logic_variables": [],
+      "resources": [
+        {
+          "key": "custom-externalapi-upload_payment_confirmation_khfoa3gj",
+          "is_error_if_source_error": true,
+          "verified_cond": null,
+          "visible_cond": null,
+          "skippable": false,
+          "is_auto_submit": false,
+          "is_re_submit": true,
+          "name": "Provide payment confirmation <br> <strong> Note: This payment is non-refundable </strong>",
+          "non_editable_fields": [],
+          "suggestions": {}
+        }
+      ],
+      "skippable": false,
+      "skip_to": null,
+      "loan_request": false,
+      "is_next_enabled": null
+    }
+  }
+}

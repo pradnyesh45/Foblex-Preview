@@ -9,6 +9,7 @@ interface FlowNode {
   position: { x: number; y: number };
   successTarget?: string;
   failureTarget?: string;
+  isTerminal?: boolean;
 }
 
 @Component({
@@ -17,13 +18,14 @@ interface FlowNode {
   imports: [CommonModule, FFlowModule],
   template: `
     <h1>Foblex Preview</h1>
-    <f-flow (fLoaded)="onLoaded()" fDraggable>
+    <f-flow (fLoaded)="onLoaded()" fDraggable fZoom>
+      <f-background></f-background>
       <f-canvas>
         <!-- Success Connections -->
         <f-connection
           *ngFor="let node of nodes"
           [fOutputId]="node.id + '-out'"
-          [fInputId]="(node.successTarget || '') + '-in'"
+          [fInputId]="(node.successTarget || node.id) + '-in'"
           fBehavior="floating"
           class="success-connection"
         >
@@ -33,7 +35,7 @@ interface FlowNode {
         <f-connection
           *ngFor="let node of nodes"
           [fOutputId]="node.id + '-out'"
-          [fInputId]="(node.failureTarget || '') + '-in'"
+          [fInputId]="(node.failureTarget || node.id) + '-in'"
           fBehavior="floating"
           class="failure-connection"
         >
@@ -54,6 +56,7 @@ interface FlowNode {
           {{ node.name }}
         </div>
       </f-canvas>
+      <f-minimap></f-minimap>
     </f-flow>
   `,
   styleUrls: ['./flow-preview.component.scss'],
@@ -69,30 +72,37 @@ export class FlowPreviewComponent implements OnInit {
   }
 
   private processFlowData(data: any) {
+    // First create regular nodes
     this.nodes = Object.entries(data.steps).map(
       ([id, step]: [string, any], index) => {
         const successTarget = step.actions?.SUCCESS?.next_key;
         const failureTarget = step.actions?.FAILURE?.next_key;
 
-        // Gentle diagonal layout with smaller increments
-        const x = index * 250 + 50;
-        const y = index * 80 + 50;
+        const x = index * 220 + 50;
+        const y = index * 60 + 50;
 
         return {
           id,
           name: step.name,
           position: { x, y },
-          successTarget: successTarget !== 'ACCEPT' ? successTarget : undefined,
-          failureTarget: failureTarget !== 'ACCEPT' ? failureTarget : undefined,
+          // Don't create connections to ACCEPT
+          successTarget: successTarget === 'ACCEPT' ? undefined : successTarget,
+          failureTarget: failureTarget === 'ACCEPT' ? undefined : failureTarget,
         };
       }
     );
+
+    // Add a visual indicator for terminal nodes (those connecting to ACCEPT)
+    this.nodes = this.nodes.map((node) => ({
+      ...node,
+      isTerminal: !node.successTarget && !node.failureTarget,
+    }));
   }
 
   public onLoaded(): void {
     setTimeout(() => {
       this.fCanvas.resetScaleAndCenter(true);
-      this.fCanvas.setZoom(0.8);
+      this.fCanvas.setZoom(0.65);
     }, 100);
   }
 }
