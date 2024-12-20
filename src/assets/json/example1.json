@@ -158,7 +158,7 @@
       "actions": {
         "FAILURE": {
           "next_location": "STEP",
-          "next_key": "step_4",
+          "next_key": "step_7",
           "webhooks": [],
           "phone_notifications": [],
           "email_notifications": [],
@@ -232,6 +232,48 @@
         "FAILURE": {
           "next_location": "STEP",
           "next_key": "step_5",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        },
+        "SUCCESS": {
+          "next_location": "STEP",
+          "next_key": "step_6",
+          "webhooks": [],
+          "phone_notifications": [],
+          "email_notifications": [],
+          "tags": [],
+          "policy": null
+        }
+      },
+      "logic_variables": [],
+      "resources": [
+        {
+          "key": "custom-externalapi-account_details_khmbzqj",
+          "is_error_if_source_error": true,
+          "verified_cond": null,
+          "visible_cond": null,
+          "skippable": false,
+          "is_auto_submit": false,
+          "is_re_submit": true,
+          "name": "Account Details",
+          "non_editable_fields": [],
+          "suggestions": {}
+        }
+      ],
+      "skippable": false,
+      "skip_to": null,
+      "loan_request": false,
+      "is_next_enabled": null
+    },
+    "step_7": {
+      "name": "Step 7: Bank Details",
+      "actions": {
+        "FAILURE": {
+          "next_location": "STEP",
+          "next_key": "step_7",
           "webhooks": [],
           "phone_notifications": [],
           "email_notifications": [],

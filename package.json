@@ -24,6 +24,8 @@
     "@foblex/mediator": "^1.1.0",
     "@foblex/platform": "^1.0.4",
     "@foblex/utils": "^1.1.0",
+    "@types/dagre": "^0.7.52",
+    "dagre": "^0.8.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
